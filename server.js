@@ -11,13 +11,20 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*"
+  })
+);
+
 app.use(express.json());
 
 
 
 mongoose.connect(process.env.MONGO_URI)
 
+
+const PORT = process.env.PORT || 5000;
 
 // 🔥 Log every request
 app.use((req, res, next) => {
@@ -38,6 +45,6 @@ app.get("/api", (req, res) => {
 
 app.use("/api/visitors", visitorRoutes);
 
-app.listen(5000, () =>
+app.listen(PORT, () =>
   console.log("🚀 Server running at http://localhost:5000")
 );
