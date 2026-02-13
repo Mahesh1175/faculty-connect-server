@@ -3,9 +3,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-console.log("EMAIL:", process.env.EMAIL_USER);
-console.log("PASS exists:", !!process.env.EMAIL_PASS);
-
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendMail = async (to, subject, html, attachments = []) => {
