@@ -72,6 +72,21 @@ router.get("/:facultyName", async (req, res) => {
 
 
 // ============================
+// GET SINGLE REQUEST
+// ============================
+router.get("/request/:id", async (req, res) => {
+  try {
+    const visitor = await Visitor.findById(req.params.id);
+    if (!visitor) {
+      return res.status(404).json({ error: "Visitor request not found" });
+    }
+    res.json(visitor);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ============================
 // UPDATE STATUS
 // ============================
 router.put("/:id", async (req, res) => {
@@ -119,6 +134,7 @@ router.put("/:id", async (req, res) => {
           <h2>Visitor Pass Approved 🎟️</h2>
           <p>Hello ${updated.visitorName},</p>
           <p>Your visit request is approved.</p>
+          <p>You can chat with ${updated.facultyName} here: <a href="http://localhost:8080/chat/${updated._id}">Chat Link</a></p>
           <p>QR code is attached.</p>
         `;
 
