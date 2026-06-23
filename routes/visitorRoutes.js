@@ -311,8 +311,23 @@ router.post("/verify", async (req, res) => {
       visitor.checkedIn &&
       !visitor.checkedOut
     ) {
+      const now = new Date();
+
+      const secondsSinceCheckin =
+        (now.getTime() -
+          new Date(visitor.checkedInAt).getTime()) /
+        1000;
+
+      if (secondsSinceCheckin < 15) {
+        return res.json({
+          valid: false,
+          message:
+            "Visitor already checked in. Wait a few seconds before checkout.",
+        });
+      }
+
       visitor.checkedOut = true;
-      visitor.checkedOutAt = new Date();
+      visitor.checkedOutAt = now;
 
       await visitor.save();
 
