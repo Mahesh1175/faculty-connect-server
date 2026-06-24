@@ -38,8 +38,12 @@ const visitorSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  checkedInAt: Date
-  ,
+  checkedInAt: Date,
+  checkedOut: {
+    type: Boolean,
+    default: false
+  },
+  checkedOutAt: Date
 });
 
 export default mongoose.model("Visitor", visitorSchema);
